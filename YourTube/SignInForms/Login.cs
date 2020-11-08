@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YourTube.DataBaseClasses;
+using YourTube.DataClass;
+using YourTube.GetDataFromYoutubeClasses;
 
 namespace YourTube
 {
@@ -27,12 +30,27 @@ namespace YourTube
             {
                 MessageBox.Show("Please type in your password");
             }
-            //chech from db user credentials
-            YourTube yourTube = new YourTube();
-            this.Hide();
-            yourTube.Show();
+            else
+            {
+                GetInfo getInfo = new GetInfo();
+                int check = getInfo.checkUserCredentials(usenameText.Text, passwordText.Text);
+                TestApiKey testApiKey = new TestApiKey();
+                string testRezults= testApiKey.testApiKey(UserGetSet.apiKey);
+                YourTube yourTube = new YourTube();
+                if (testRezults=="Bad")
+                {
+                    MessageBox.Show("Your Api Key has expired please change it");
+                    this.Hide();
+                    yourTube.Show();
+                }
+                else if (check == 1)
+                {
+                    this.Hide();
+                    yourTube.Show();
+                }
+                else MessageBox.Show("Error your credentials are bad");
+            }
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();

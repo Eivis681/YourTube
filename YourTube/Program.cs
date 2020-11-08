@@ -16,7 +16,7 @@ namespace YourTube
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new YourTube());
+            Application.Run(new Login());
         }
     }
 }

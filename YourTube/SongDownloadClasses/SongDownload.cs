@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using VideoLibrary;
+using YourTube.SongDownloadClasses;
 using YoutubeExplode;
 using YoutubeExplode.Videos.Streams;
 
@@ -23,8 +24,8 @@ namespace YourTube
         }
         public async void DownloadSong(string uri, string directory)
         {
-            try
-            {
+            //try
+            //{
                 YourTube yourTube = new YourTube();
                 var youtube = new YoutubeClient();
                 var vid = await youtube.Videos.GetAsync(uri);
@@ -39,19 +40,21 @@ namespace YourTube
                     if (streamInfo != null)
                     {
                         await youtube.Videos.Streams.GetAsync(streamInfo);
-                        await youtube.Videos.Streams.DownloadAsync(streamInfo, vid.Title + ".mp3");
+                        await youtube.Videos.Streams.DownloadAsync(streamInfo, vid.Title+ ".mp3");
                     }
                     string data = Directory.GetCurrentDirectory() + "\\";
+                    AudioConverter audioConverter = new AudioConverter();
+                    audioConverter.ConvertAudio(data +vid.Title);
                     File.Move(data + vid.Title + ".mp3", directory + "\\" + vid.Title + ".mp3");
                     int index = 1;
                     progressBar1.Invoke((int)index);
                     yourTube.DownloadEn();
                 }
-            }
-            catch (Exception e)
-            {
-                DownloadSong(uri, directory);
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    DownloadSong(uri, directory);
+            //}
         }
     }
 }

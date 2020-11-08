@@ -40,6 +40,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.uriTextBoxSong = new System.Windows.Forms.TextBox();
             this.Videos = new System.Windows.Forms.TabPage();
+            this.fromVidLab = new System.Windows.Forms.Label();
+            this.toVidLab = new System.Windows.Forms.Label();
             this.MKV = new System.Windows.Forms.RadioButton();
             this.videoProgressBar = new System.Windows.Forms.ProgressBar();
             this.MP4 = new System.Windows.Forms.RadioButton();
@@ -50,6 +52,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.videoURL = new System.Windows.Forms.TextBox();
             this.Playlists = new System.Windows.Forms.TabPage();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.playlistName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.playlistUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DownloadPlaylist = new System.Windows.Forms.Button();
             this.InspectPlaylistBu = new System.Windows.Forms.Button();
             this.RenamePlaylist = new System.Windows.Forms.Button();
@@ -65,8 +70,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.fromVidLab = new System.Windows.Forms.Label();
-            this.toVidLab = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.MP3.SuspendLayout();
             this.Videos.SuspendLayout();
@@ -203,6 +206,24 @@
             this.Videos.Text = "Videos";
             this.Videos.UseVisualStyleBackColor = true;
             // 
+            // fromVidLab
+            // 
+            this.fromVidLab.AutoSize = true;
+            this.fromVidLab.Location = new System.Drawing.Point(6, 145);
+            this.fromVidLab.Name = "fromVidLab";
+            this.fromVidLab.Size = new System.Drawing.Size(18, 13);
+            this.fromVidLab.TabIndex = 15;
+            this.fromVidLab.Text = "0/";
+            // 
+            // toVidLab
+            // 
+            this.toVidLab.AutoSize = true;
+            this.toVidLab.Location = new System.Drawing.Point(37, 145);
+            this.toVidLab.Name = "toVidLab";
+            this.toVidLab.Size = new System.Drawing.Size(13, 13);
+            this.toVidLab.TabIndex = 14;
+            this.toVidLab.Text = "0";
+            // 
             // MKV
             // 
             this.MKV.AutoSize = true;
@@ -286,6 +307,7 @@
             // 
             // Playlists
             // 
+            this.Playlists.Controls.Add(this.listView1);
             this.Playlists.Controls.Add(this.DownloadPlaylist);
             this.Playlists.Controls.Add(this.InspectPlaylistBu);
             this.Playlists.Controls.Add(this.RenamePlaylist);
@@ -298,18 +320,42 @@
             this.Playlists.Text = "Playlists";
             this.Playlists.UseVisualStyleBackColor = true;
             // 
+            // listView1
+            // 
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.playlistName,
+            this.playlistUrl});
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(-4, 0);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(365, 215);
+            this.listView1.TabIndex = 5;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // playlistName
+            // 
+            this.playlistName.Text = "Playlist Name";
+            this.playlistName.Width = 109;
+            // 
+            // playlistUrl
+            // 
+            this.playlistUrl.Text = "Url";
+            this.playlistUrl.Width = 258;
+            // 
             // DownloadPlaylist
             // 
-            this.DownloadPlaylist.Location = new System.Drawing.Point(367, 132);
+            this.DownloadPlaylist.Location = new System.Drawing.Point(367, 139);
             this.DownloadPlaylist.Name = "DownloadPlaylist";
             this.DownloadPlaylist.Size = new System.Drawing.Size(84, 23);
             this.DownloadPlaylist.TabIndex = 4;
             this.DownloadPlaylist.Text = "Download";
             this.DownloadPlaylist.UseVisualStyleBackColor = true;
+            this.DownloadPlaylist.Click += new System.EventHandler(this.DownloadPlaylist_Click);
             // 
             // InspectPlaylistBu
             // 
-            this.InspectPlaylistBu.Location = new System.Drawing.Point(367, 103);
+            this.InspectPlaylistBu.Location = new System.Drawing.Point(367, 110);
             this.InspectPlaylistBu.Name = "InspectPlaylistBu";
             this.InspectPlaylistBu.Size = new System.Drawing.Size(84, 23);
             this.InspectPlaylistBu.TabIndex = 3;
@@ -319,7 +365,7 @@
             // 
             // RenamePlaylist
             // 
-            this.RenamePlaylist.Location = new System.Drawing.Point(367, 74);
+            this.RenamePlaylist.Location = new System.Drawing.Point(367, 81);
             this.RenamePlaylist.Name = "RenamePlaylist";
             this.RenamePlaylist.Size = new System.Drawing.Size(84, 23);
             this.RenamePlaylist.TabIndex = 2;
@@ -329,16 +375,17 @@
             // 
             // DeletePlaylist
             // 
-            this.DeletePlaylist.Location = new System.Drawing.Point(367, 45);
+            this.DeletePlaylist.Location = new System.Drawing.Point(367, 52);
             this.DeletePlaylist.Name = "DeletePlaylist";
             this.DeletePlaylist.Size = new System.Drawing.Size(84, 23);
             this.DeletePlaylist.TabIndex = 1;
             this.DeletePlaylist.Text = "Delete Playlist";
             this.DeletePlaylist.UseVisualStyleBackColor = true;
+            this.DeletePlaylist.Click += new System.EventHandler(this.DeletePlaylist_Click);
             // 
             // CreatePlaylistButton
             // 
-            this.CreatePlaylistButton.Location = new System.Drawing.Point(367, 16);
+            this.CreatePlaylistButton.Location = new System.Drawing.Point(367, 23);
             this.CreatePlaylistButton.Name = "CreatePlaylistButton";
             this.CreatePlaylistButton.Size = new System.Drawing.Size(84, 23);
             this.CreatePlaylistButton.TabIndex = 0;
@@ -457,24 +504,6 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "Username:";
             // 
-            // fromVidLab
-            // 
-            this.fromVidLab.AutoSize = true;
-            this.fromVidLab.Location = new System.Drawing.Point(6, 145);
-            this.fromVidLab.Name = "fromVidLab";
-            this.fromVidLab.Size = new System.Drawing.Size(18, 13);
-            this.fromVidLab.TabIndex = 15;
-            this.fromVidLab.Text = "0/";
-            // 
-            // toVidLab
-            // 
-            this.toVidLab.AutoSize = true;
-            this.toVidLab.Location = new System.Drawing.Point(37, 145);
-            this.toVidLab.Name = "toVidLab";
-            this.toVidLab.Size = new System.Drawing.Size(13, 13);
-            this.toVidLab.TabIndex = 14;
-            this.toVidLab.Text = "0";
-            // 
             // YourTube
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -536,6 +565,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label fromVidLab;
         private System.Windows.Forms.Label toVidLab;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader playlistName;
+        private System.Windows.Forms.ColumnHeader playlistUrl;
     }
 }
 

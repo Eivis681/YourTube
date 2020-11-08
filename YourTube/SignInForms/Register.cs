@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YourTube.DataBaseClasses;
+using YourTube.GetDataFromYoutubeClasses;
 
 namespace YourTube
 {
@@ -46,11 +48,36 @@ namespace YourTube
             {
                 MessageBox.Show("Your passwords don't mach");
             }
-            //chech in db for the same username
-            MessageBox.Show("Your have registered successfully");
-            this.Hide();
-            Login login = new Login();
-            login.Show();
+            //GetUsersUsername getUsersUsername = new GetUsersUsername();
+            GetInfo getInfo = new GetInfo();
+            List<string> usernames= getInfo.getUserUsername();
+            bool isRegistered = false;
+            foreach (string data in usernames)
+            {
+                if (data==usernameText.Text)
+                {
+                    MessageBox.Show("Change ussername");
+                    isRegistered = true;
+                }
+            }
+            if (isRegistered==false)
+            {
+                TestApiKey testApiKey = new TestApiKey();
+                string testRezult = testApiKey.testApiKey(apiKeyText.Text);
+                if (testRezult == "Bad")
+                {
+                    MessageBox.Show("Your Api key is invalid");
+                }
+                else
+                {
+                    AddInfo addInfo = new AddInfo();
+                    addInfo.addNewUser(usernameText.Text, passwrodText.Text, apiKeyText.Text);
+                    MessageBox.Show("Your have registered successfully");
+                    this.Hide();
+                    Login login = new Login();
+                    login.Show();
+                }
+            }
         }
     }
 }

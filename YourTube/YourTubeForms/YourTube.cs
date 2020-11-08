@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
+using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using YourTube.DataBaseClasses;
+using YourTube.DataClass;
 using YourTube.GetDataFromYoutubeClasses;
 using YourTube.VideoDownloadClasses;
 
@@ -13,6 +17,7 @@ namespace YourTube
         private readonly SongDownload songDownload;
         private readonly VideoDownload videoDownload;
         private readonly VideoPlaylistDownload videoPlaylistDownload;
+        
         public YourTube()
         {
             InitializeComponent();
@@ -20,11 +25,27 @@ namespace YourTube
             songDownload = new SongDownload(ProgressBar);
             videoDownload = new VideoDownload(ProgressBarVideo);
             videoPlaylistDownload = new VideoPlaylistDownload(ProgressBarVideo);
-            //labelUsername.Text= get from db username of user
-            //labelApiKey.Text= get from db username of user 
-            //labelTotalPlaylist.text = get all playlist from db
+            UserGetSet.input();
+            labelUsername.Text = UserGetSet.username;
+            labelApiKey.Text = UserGetSet.apiKey;
+            GetInfo getInfo = new GetInfo();
+            //List<string> playlistData =  getInfo.getPlaylists();
+            //ListViewItem item = new ListViewItem();
+            //for (int i =0; i < playlistData.Count;i=i+2)
+            //{
+            //    if (i == 0)
+            //    {
+            //        listView1.Items.Add(playlistData[i]);
+            //        listView1.Items[i].SubItems.Add(playlistData[i + 1]);
+            //    }
+            //    else
+            //    {
+            //        listView1.Items.Add(playlistData[i]);
+            //        listView1.Items[i/2].SubItems.Add(playlistData[i + 1]);
+            //    }
+            //}
+            updateList();
         }
-
         private void Mp3Download_Click(object sender, EventArgs e)
         {
             string[] array = uriTextBoxSong.Text.Split('?');
@@ -69,14 +90,23 @@ namespace YourTube
                         else
                         {
                             string playlistName = Microsoft.VisualBasic.Interaction.InputBox("Please type in your playlist name", "Download", "");
-                            //save titles to database 
-                            LinksFromPlaylist linksFromPlaylist = new LinksFromPlaylist();
-                            List<string> videoIdLists = linksFromPlaylist.getLinks(uriTextBoxSong.Text);
-                            songProgressBar.Maximum = videoIdLists.Count;
-                            toLab.Text = videoIdLists.Count.ToString();
-                            string[] playlistID = uriTextBoxSong.Text.Split('=');
-                            int index = 0;
-                            playlistDownload.DownloadSongPlaylist(videoIdLists, saveToTextBoxSong.Text, playlistID[1], index);
+                            if (playlistName == "")
+                            {
+                            }
+                            else
+                            {
+                                //SaveNewPlaylist saveNewPlaylist = new SaveNewPlaylist();
+                                AddInfo addInfo = new AddInfo();
+                                addInfo.addNewPlaylist(playlistName, uriTextBoxSong.Text, "Yes");
+                                this.Refresh();
+                                LinksFromPlaylist linksFromPlaylist = new LinksFromPlaylist();
+                                List<string> videoIdLists = linksFromPlaylist.getLinks(uriTextBoxSong.Text);
+                                songProgressBar.Maximum = videoIdLists.Count;
+                                toLab.Text = videoIdLists.Count.ToString();
+                                string[] playlistID = uriTextBoxSong.Text.Split('=');
+                                int index = 0;
+                                playlistDownload.DownloadSongPlaylist(videoIdLists, saveToTextBoxSong.Text, playlistID[1], index);
+                            }
                         }
 
                     }
@@ -191,18 +221,40 @@ namespace YourTube
 
         private void InspectPlaylistBu_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            InspectPlaylist inspectPlaylist = new InspectPlaylist();
-            inspectPlaylist.Show();
+            if (listView1.SelectedItems.Count==0)
+            {
+                MessageBox.Show("Please select a playlist");
+            }
+            else
+            {
+                string selectedPlaylistName = listView1.Items[listView1.SelectedIndices[0]].Text;
+                UserGetSet.input();
+                UserGetSet.selectedPlaylis = selectedPlaylistName;
+                this.Hide();
+                InspectPlaylist inspectPlaylist = new InspectPlaylist();
+                inspectPlaylist.Show();
+            }
+            
         }
 
         private void RenamePlaylist_Click(object sender, EventArgs e)
         {
-            //var result = Interaction.InputBox("Please type in a new playlist name", "Rename", "");
-            //if (result == DialogResult.OK)
-            //{
+            if (listView1.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select a playlist");
+            }
+            else
+            {
+                string playlistName = Microsoft.VisualBasic.Interaction.InputBox("Please type in your playlist name", "Rename", "");
+               // RenameUserPlaylist renameUserPlaylist = new RenameUserPlaylist();
+                string selectedPlaylistName = listView1.Items[listView1.SelectedIndices[0]].Text;
+                UpdateInfo updateInfo = new UpdateInfo();
+                updateInfo.renamePlaylist(selectedPlaylistName, playlistName);
+                MessageBox.Show("Name has been updated successfully");
+                updateList();
+            }
 
-            //}
+
         }
         private void ProgressBar(int number)
         {
@@ -236,10 +288,14 @@ namespace YourTube
 
         private void deleteAccount_Click(object sender, EventArgs e)
         {
-            DialogResult dr = MessageBox.Show("Are you sure you want to delete your account", "Download", MessageBoxButtons.YesNo);
+            DialogResult dr = MessageBox.Show("Are you sure you want to delete your account", "Delete", MessageBoxButtons.YesNo);
             if (dr == DialogResult.Yes)
             {
-                //delete from db account 
+                SQLiteConnection sqlite_conn = new SQLiteConnection("Data Source=YourTubeDB.db; Version = 3; New = True; Compress = True; ");
+                sqlite_conn.Open();
+                SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
+                sqlite_cmd.CommandText = "DELETE FROM User WHERE username = '"+UserGetSet.username+"'";
+                sqlite_cmd.ExecuteNonQuery();
                 MessageBox.Show("Your account has beend deletes cessfully");
                 Login login = new Login();
                 this.Hide();
@@ -265,6 +321,86 @@ namespace YourTube
         public void YourHaveVideo()
         {
             MessageBox.Show("You already have this video in your folder");
+        }
+
+        private void DeletePlaylist_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select a playlist");
+            }
+            else {
+                DialogResult dr = MessageBox.Show("Are you sure you want to delete this playlist", "Delete", MessageBoxButtons.YesNo);
+                if (dr == DialogResult.Yes)
+                {
+                    string selectedPlaylistName = listView1.Items[listView1.SelectedIndices[0]].Text;
+                    SQLiteConnection sqlite_conn = new SQLiteConnection("Data Source=YourTubeDB.db; Version = 3; New = True; Compress = True; ");
+                    sqlite_conn.Open();
+                    SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
+                    sqlite_cmd.CommandText = "DELETE FROM Playlist WHERE Name ='" + selectedPlaylistName + "'";
+                    sqlite_cmd.ExecuteNonQuery();
+                    sqlite_cmd.CommandText = "DELETE FROM Titles WHERE PlaylistID ='" + selectedPlaylistName + "'";
+                    sqlite_cmd.ExecuteNonQuery();
+                    MessageBox.Show("Your playlis has been deletes successfuly");
+                    updateList();
+                }
+            }
+        }
+
+        private void DownloadPlaylist_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select a playlist");
+            }
+            else
+            {
+                string directory = Microsoft.VisualBasic.Interaction.InputBox("Please type in where you want to save the playlist", "Save", "");
+                if (directory =="" )
+                {
+                }
+                else if (Directory.Exists(directory))
+                {
+                    string selectedPlaylistUrl = listView1.Items[0].SubItems[1].Text;
+                    string selectedPlaylistName = listView1.Items[listView1.SelectedIndices[0]].Text;
+                    LinksFromPlaylist linksFromPlaylist = new LinksFromPlaylist();
+                    List<string> videoIdLists = linksFromPlaylist.getLinks(selectedPlaylistUrl);
+                    songProgressBar.Maximum = videoIdLists.Count;
+                    toLab.Text = videoIdLists.Count.ToString();
+                    string[] playlistID = selectedPlaylistUrl.Split('=');
+                    int index = 0;
+                    SongPlaylistDownload playlistDownload = new SongPlaylistDownload(ProgressBar);
+                    playlistDownload.DownloadSongPlaylist(videoIdLists, directory, playlistID[1], index);
+                    //SongDownloadUpate songDownloadUpate = new SongDownloadUpate();
+                    UpdateInfo updateInfo = new UpdateInfo();
+                    updateInfo.updateStatus(selectedPlaylistName);
+                }
+                else
+                {
+                    MessageBox.Show("Save location is invalid");
+                } 
+            }
+        }
+
+        public void updateList ()
+        {
+            listView1.Items.Clear();
+            GetInfo getInfo = new GetInfo();
+            List<string> playlistData = getInfo.getPlaylists();
+            ListViewItem item = new ListViewItem();
+            for (int i = 0; i < playlistData.Count; i = i + 2)
+            {
+                if (i == 0)
+                {
+                    listView1.Items.Add(playlistData[i]);
+                    listView1.Items[i].SubItems.Add(playlistData[i + 1]);
+                }
+                else
+                {
+                    listView1.Items.Add(playlistData[i]);
+                    listView1.Items[i / 2].SubItems.Add(playlistData[i + 1]);
+                }
+            }
         }
     }
 }

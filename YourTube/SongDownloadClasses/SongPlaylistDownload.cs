@@ -19,8 +19,8 @@ namespace YourTube
             YourTube yourTube = new YourTube();
             for (int i = index; i < mas.Count; i++)
             {
-                try
-                {
+                //try
+                //{
                     string url = "https://www.youtube.com/watch?v=" + mas[i] + "&list=" + playlistID + "&index=" + index + 1;
                     index++;
                     var youtube = new YoutubeClient();
@@ -46,14 +46,14 @@ namespace YourTube
                     {
                         yourTube.DownloadEn();
                     }
-                }
-                catch (Exception e)
-                {
-                    if (index < mas.Count)
-                    {
-                        DownloadSongPlaylist(mas, directory, playlistID, index - 1);
-                    }
-                }
+                //}
+                //catch (Exception e)
+                //{
+                //    if (index < mas.Count)
+                //    {
+                //        DownloadSongPlaylist(mas, directory, playlistID, index - 1);
+                //    }
+                //}
             }
         }
     }
