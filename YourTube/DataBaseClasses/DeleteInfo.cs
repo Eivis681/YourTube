@@ -15,5 +15,17 @@ namespace YourTube.DataBaseClasses
             sqlite_cmd.ExecuteNonQuery();
             sqlite_conn.Close();
         }
+
+        public void DeletePlaylist(string playlistName)
+        {
+            sqlite_conn.Open();
+            SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
+            sqlite_cmd.CommandText = "DELETE FROM Playlist WHERE Name ='" + playlistName + "'";
+            sqlite_cmd.ExecuteNonQuery();
+            sqlite_cmd.CommandText = "DELETE FROM Titles WHERE PlaylistID ='" + playlistName + "'";
+            sqlite_cmd.ExecuteNonQuery();
+            sqlite_cmd.CommandText = "DELETE FROM PlaylistInfo WHERE PlaylistName ='" + playlistName + "'";
+            sqlite_cmd.ExecuteNonQuery();
+        }
     }
 }

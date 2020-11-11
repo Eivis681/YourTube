@@ -2,6 +2,7 @@
 using System.Data.SQLite;
 using YourTube.DataClass;
 using YourTube.GetDataFromYoutubeClasses;
+using YoutubeExplode;
 
 namespace YourTube.DataBaseClasses
 {
@@ -28,34 +29,36 @@ namespace YourTube.DataBaseClasses
             sqlite_cmd = sqlite_conn.CreateCommand();
             for (int i = 0; i < videoId.Count; i++)
             {
-                sqlite_cmd.CommandText = "INSERT INTO Titles (PlaylistID, VideoTitle, VideoId, DownloadedVideo) VALUES('" + playlistName + "' ,'" + videoTitle[i] + "' ,'" + videoId[i] + "', '" + yesNo + "'); ";
+                sqlite_cmd.CommandText = "INSERT INTO Titles (PlaylistID, VideoTitle, VideoId, DownloadedVideo, VideoUrl) VALUES('" + playlistName + "' ,'" + videoTitle[i] + "' ,'" + videoId[i] + "', '" + yesNo + "', '"+url+"'); ";
                 sqlite_cmd.ExecuteNonQuery();
             }
-        }
-        public void addSong(string url)
-        {
-            LinksFromPlaylist linksFromPlaylist = new LinksFromPlaylist();
-            GetTitles getTitles = new GetTitles();
-            List<string> videoId = linksFromPlaylist.getLinks(url);
-            List<string> videoTitle = getTitles.getTitles(url);
-            sqlite_conn.Open();
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = sqlite_conn.CreateCommand();
-            UserGetSet.input();
-            sqlite_cmd.CommandText = "INSERT INTO Titles (PlaylistID, VideoTitle, VideoId, DownloadedVideo) VALUES('" + UserGetSet.selectedPlaylis + "' ,'" + videoTitle[0] + "' ,'" + videoId[0] + "', 'No'); ";
+            sqlite_cmd.CommandText = "INSERT INTO PlaylistInfo (PlaylistName, PlaylistID) VALUES('" + playlistName + "','" + url + "')";
             sqlite_cmd.ExecuteNonQuery();
+            sqlite_conn.Close();
+        }
+        public async void addSong(string url)
+        {
+            var youtube = new YoutubeClient();
+            var vid = await youtube.Videos.GetAsync(url);
+            string[] videoId = vid.Url.Split('=');
+            sqlite_conn.Open();
+            SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
+            UserGetSet.input();
+            sqlite_cmd.CommandText = "INSERT INTO Titles (PlaylistID, VideoTitle, VideoId, DownloadedVideo) VALUES('" + UserGetSet.selectedPlaylis + "' ,'" + vid.Title + "' ,'" + videoId[1] + "', 'No'); ";
+            sqlite_cmd.ExecuteNonQuery();
+            sqlite_conn.Close();
         }
 
         public void addNewPlaylist(string playlistName, string url, string yesNo)
         {
+            AddInfo addInfo = new AddInfo();
+            addInfo.addSongs(playlistName, url, yesNo);
             sqlite_conn.Open();
             SQLiteCommand sqlite_cmd;
             sqlite_cmd = sqlite_conn.CreateCommand();
             UserGetSet.input();
             sqlite_cmd.CommandText = "INSERT INTO Playlist (UserId, Name, PlaylistUrl) VALUES('" + UserGetSet.username + "' ,'" + playlistName + "' ,'" + url + "'); ";
             sqlite_cmd.ExecuteNonQuery();
-            AddInfo addInfo = new AddInfo();
-            addInfo.addSongs(playlistName, url, yesNo);
             sqlite_conn.Close();
         }
     }

@@ -62,20 +62,40 @@ namespace YourTube.DataBaseClasses
             return playlistData;
         }
 
+         public List<int> getPlaylistData(List<string> playlistUrls)
+        {
+            List<int> count = new List<int>();
+            foreach(string url in playlistUrls)
+            {
+                sqlite_conn.Open();
+                SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
+                UserGetSet.input();
+                sqlite_cmd.CommandText = "Select VideoTitle from Titles WHERE VideoUrl = '" + url + "' AND PlaylistID = '" + UserGetSet.selectedPlaylis+"'";
+                SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader();
+                List<string> playlistData = new List<string>();
+                while (sqlite_datareader.Read())
+                {
+                    string title = sqlite_datareader.GetString(0);
+                    playlistData.Add(title);
+                }
+                sqlite_conn.Close();
+                count.Add(playlistData.Count);
+            }
+            return count;
+        }
+
         public List<string> getPlaylists()
         {
             sqlite_conn.Open();
             SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
             UserGetSet.input();
-            sqlite_cmd.CommandText = "Select Name, PlaylistUrl from Playlist WHERE UserId = '" + UserGetSet.username + "'";
+            sqlite_cmd.CommandText = "Select Name from Playlist WHERE UserId = '" + UserGetSet.username + "'";
             SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader();
             List<string> playlistData = new List<string>();
             while (sqlite_datareader.Read())
             {
                 string name = sqlite_datareader.GetString(0);
-                string url = sqlite_datareader.GetString(1);
                 playlistData.Add(name);
-                playlistData.Add(url);
             }
             sqlite_conn.Close();
             return playlistData;
@@ -127,6 +147,58 @@ namespace YourTube.DataBaseClasses
             }
             sqlite_conn.Close();
             return videoId;
+        }
+
+        public string getSongCount(string playlistName)
+        {
+            sqlite_conn.Open();
+            SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
+            UserGetSet.input();
+            sqlite_cmd.CommandText = "Select PlaylistID from Titles Where PlaylistID='"+playlistName+"'";
+            SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader();
+            List<string> count = new List<string>();
+            while (sqlite_datareader.Read())
+            {
+                string myreader = sqlite_datareader.GetString(0);
+                count.Add(myreader);
+            }
+            sqlite_conn.Close();
+            return count.Count.ToString();
+        }
+        
+
+
+        public List<string> getAllVideoId(string playlistName)
+        {
+            sqlite_conn.Open();
+            SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
+            sqlite_cmd.CommandText = "Select VideoId from Titles Where PlaylistID = '" + playlistName + "'";
+            SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader();
+            List<string> videoId = new List<string>();
+            while (sqlite_datareader.Read())
+            {
+                string myreader = sqlite_datareader.GetString(0);
+                videoId.Add(myreader);
+            }
+            sqlite_conn.Close();
+            return videoId;
+        }
+
+        public List<string> playlistUrls()
+        {
+            sqlite_conn.Open();
+            SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
+            UserGetSet.input();
+            sqlite_cmd.CommandText = "Select PlaylistID from PlaylistInfo Where PlaylistName = '" + UserGetSet.selectedPlaylis + "'";
+            SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader();
+            List<string> playlistUrls = new List<string>();
+            while (sqlite_datareader.Read())
+            {
+                string myreader = sqlite_datareader.GetString(0);
+                playlistUrls.Add(myreader);
+            }
+            sqlite_conn.Close();
+            return playlistUrls;
         }
 
     }

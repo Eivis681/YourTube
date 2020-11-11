@@ -336,12 +336,12 @@
             // playlistName
             // 
             this.playlistName.Text = "Playlist Name";
-            this.playlistName.Width = 109;
+            this.playlistName.Width = 255;
             // 
             // playlistUrl
             // 
-            this.playlistUrl.Text = "Url";
-            this.playlistUrl.Width = 258;
+            this.playlistUrl.Text = "Song Count";
+            this.playlistUrl.Width = 107;
             // 
             // DownloadPlaylist
             // 

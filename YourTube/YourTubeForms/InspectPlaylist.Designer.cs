@@ -38,6 +38,9 @@
             this.Update = new System.Windows.Forms.Button();
             this.DownloadNew = new System.Windows.Forms.Button();
             this.DownloadOne = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.fromLab = new System.Windows.Forms.Label();
+            this.toLab = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // AddSong
@@ -88,7 +91,7 @@
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(13, 12);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(402, 307);
+            this.listView1.Size = new System.Drawing.Size(402, 273);
             this.listView1.TabIndex = 4;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -111,6 +114,7 @@
             this.Update.TabIndex = 5;
             this.Update.Text = "Update";
             this.Update.UseVisualStyleBackColor = true;
+            this.Update.Click += new System.EventHandler(this.Update_Click);
             // 
             // DownloadNew
             // 
@@ -132,11 +136,39 @@
             this.DownloadOne.UseVisualStyleBackColor = true;
             this.DownloadOne.Click += new System.EventHandler(this.DownloadOne_Click);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(13, 292);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(402, 23);
+            this.progressBar1.TabIndex = 8;
+            // 
+            // fromLab
+            // 
+            this.fromLab.AutoSize = true;
+            this.fromLab.Location = new System.Drawing.Point(422, 302);
+            this.fromLab.Name = "fromLab";
+            this.fromLab.Size = new System.Drawing.Size(18, 13);
+            this.fromLab.TabIndex = 12;
+            this.fromLab.Text = "0/";
+            // 
+            // toLab
+            // 
+            this.toLab.AutoSize = true;
+            this.toLab.Location = new System.Drawing.Point(453, 302);
+            this.toLab.Name = "toLab";
+            this.toLab.Size = new System.Drawing.Size(13, 13);
+            this.toLab.TabIndex = 11;
+            this.toLab.Text = "0";
+            // 
             // InspectPlaylist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(532, 331);
+            this.Controls.Add(this.fromLab);
+            this.Controls.Add(this.toLab);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.DownloadOne);
             this.Controls.Add(this.DownloadNew);
             this.Controls.Add(this.Update);
@@ -148,6 +180,7 @@
             this.Name = "InspectPlaylist";
             this.Text = "InspectPlaylist";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -163,5 +196,8 @@
         private System.Windows.Forms.Button Update;
         private System.Windows.Forms.Button DownloadNew;
         private System.Windows.Forms.Button DownloadOne;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label fromLab;
+        private System.Windows.Forms.Label toLab;
     }
 }

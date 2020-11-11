@@ -41,6 +41,7 @@ namespace YourTube
                     {
                         await youtube.Videos.Streams.GetAsync(streamInfo);
                         await youtube.Videos.Streams.DownloadAsync(streamInfo, vid.Title+ ".mp3");
+                    
                     }
                     string data = Directory.GetCurrentDirectory() + "\\";
                     AudioConverter audioConverter = new AudioConverter();
