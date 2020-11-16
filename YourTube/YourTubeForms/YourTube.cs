@@ -27,11 +27,13 @@ namespace YourTube
             oneSongDownload = new OneSongDownload(ProgressBar);
             videoDownload = new VideoDownload(ProgressBarVideo);
             videoPlaylistDownload = new VideoPlaylistDownload(ProgressBarVideo);
+            updateList();
             UserGetSet.input();
             labelUsername.Text = UserGetSet.username;
             labelApiKey.Text = UserGetSet.apiKey;
+            labelTotalPlaylist.Text = UserGetSet.playlistCount;
             GetInfo getInfo = new GetInfo();
-            updateList();
+
         }
         private void Mp3Download_Click(object sender, EventArgs e)
         {
@@ -357,11 +359,12 @@ namespace YourTube
             GetInfo getInfo = new GetInfo();
             List<string> playlistData = getInfo.getPlaylists();
             List<string> count = new List<string>();
+            UserGetSet.input();
+            UserGetSet.playlistCount = playlistData.Count.ToString();
             foreach (string playlistName in playlistData)
             {
                 count.Add(getInfo.getSongCount(playlistName));
             }
-            ListViewItem item = new ListViewItem();
             for (int i = 0; i < playlistData.Count; i++)
             {
                 listView1.Items.Add(playlistData[i]);

@@ -12,6 +12,7 @@ namespace YourTube.DataClass
         public static string apiKey { get; set; }
         public static string password { get; set; }
         public static string selectedPlaylis { get; set; }
+        public static string playlistCount { get; set; }
         public static void input() { }
     }
 }

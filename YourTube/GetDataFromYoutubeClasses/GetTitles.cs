@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using YourTube.DataClass;
 
 namespace YourTube.GetDataFromYoutubeClasses
 {
@@ -14,7 +15,8 @@ namespace YourTube.GetDataFromYoutubeClasses
             try
             {
                 string[] playlistId = uri.Split('=');
-                string url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=" + playlistId[1] + "&key=AIzaSyDmQnQcWyJfzAobgMogygmgwtNbgTvkUaY";
+                UserGetSet.input();
+                string url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=" + playlistId[1] + "&key="+UserGetSet.apiKey+"";
                 WebClient wc = new WebClient();
                 //Calls google ur to get JSON file with an address
                 string urlData = wc.DownloadString(url);
