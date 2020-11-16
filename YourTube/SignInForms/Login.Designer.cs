@@ -34,6 +34,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.passwordText = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.rememberMe = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // usenameText
@@ -54,7 +55,7 @@
             // 
             // Save
             // 
-            this.Save.Location = new System.Drawing.Point(49, 107);
+            this.Save.Location = new System.Drawing.Point(49, 130);
             this.Save.Name = "Save";
             this.Save.Size = new System.Drawing.Size(99, 23);
             this.Save.TabIndex = 6;
@@ -80,7 +81,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(49, 136);
+            this.button1.Location = new System.Drawing.Point(49, 159);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(99, 23);
             this.button1.TabIndex = 9;
@@ -88,11 +89,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // rememberMe
+            // 
+            this.rememberMe.AutoSize = true;
+            this.rememberMe.Location = new System.Drawing.Point(12, 99);
+            this.rememberMe.Name = "rememberMe";
+            this.rememberMe.Size = new System.Drawing.Size(94, 17);
+            this.rememberMe.TabIndex = 10;
+            this.rememberMe.Text = "Remember me";
+            this.rememberMe.UseVisualStyleBackColor = true;
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(209, 174);
+            this.ClientSize = new System.Drawing.Size(209, 196);
+            this.Controls.Add(this.rememberMe);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.passwordText);
@@ -114,5 +126,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox passwordText;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox rememberMe;
     }
 }

@@ -371,5 +371,20 @@ namespace YourTube
                 listView1.Items[i].SubItems.Add(count[i]);
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Login login = new Login();
+            login.Show();
+        }
+
+        private void YourTube_FormClosing(object sender, FormClosedEventArgs e)
+        {
+            if (System.Windows.Forms.Application.MessageLoop)
+            {
+                System.Windows.Forms.Application.Exit();
+            }
+        }
     }
 }

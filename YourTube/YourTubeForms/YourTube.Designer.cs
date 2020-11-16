@@ -70,6 +70,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.MP3.SuspendLayout();
             this.Videos.SuspendLayout();
@@ -395,6 +396,7 @@
             // 
             // Account
             // 
+            this.Account.Controls.Add(this.button1);
             this.Account.Controls.Add(this.deleteAccount);
             this.Account.Controls.Add(this.EditKeyy);
             this.Account.Controls.Add(this.changePassword);
@@ -504,11 +506,22 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "Username:";
             // 
+            // button1
+            // 
+            this.button1.AutoSize = true;
+            this.button1.Location = new System.Drawing.Point(386, 196);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 18;
+            this.button1.Text = "Sign out";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // YourTube
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(493, 269);
+            this.ClientSize = new System.Drawing.Size(492, 269);
             this.Controls.Add(this.tabControl1);
             this.Name = "YourTube";
             this.Text = "Form1";
@@ -568,6 +581,7 @@
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ColumnHeader playlistName;
         private System.Windows.Forms.ColumnHeader playlistUrl;
+        private System.Windows.Forms.Button button1;
     }
 }
 
