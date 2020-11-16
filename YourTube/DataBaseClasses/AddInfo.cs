@@ -12,8 +12,7 @@ namespace YourTube.DataBaseClasses
         public void addNewUser(string username, string password, string apiKey)
         {
             sqlite_conn.Open();
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = sqlite_conn.CreateCommand();
+            SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
             sqlite_cmd.CommandText = "INSERT INTO User (Username, Password, ApiKey) VALUES('" + username + "' ,'" + password + "' ,'" + apiKey + "'); ";
             sqlite_cmd.ExecuteNonQuery();
             sqlite_conn.Close();
@@ -25,10 +24,10 @@ namespace YourTube.DataBaseClasses
             List<string> videoId = linksFromPlaylist.getLinks(url);
             List<string> videoTitle = getTitles.getTitles(url);
             sqlite_conn.Open();
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = sqlite_conn.CreateCommand();
+            SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
             for (int i = 0; i < videoId.Count; i++)
             {
+                videoTitle[i] = videoTitle[i].Replace("\"", "").Replace("'", "");
                 sqlite_cmd.CommandText = "INSERT INTO Titles (PlaylistID, VideoTitle, VideoId, DownloadedVideo, VideoUrl) VALUES('" + playlistName + "' ,'" + videoTitle[i] + "' ,'" + videoId[i] + "', '" + yesNo + "', '"+url+"'); ";
                 sqlite_cmd.ExecuteNonQuery();
             }
@@ -44,7 +43,7 @@ namespace YourTube.DataBaseClasses
             sqlite_conn.Open();
             SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
             UserGetSet.input();
-            sqlite_cmd.CommandText = "INSERT INTO Titles (PlaylistID, VideoTitle, VideoId, DownloadedVideo) VALUES('" + UserGetSet.selectedPlaylis + "' ,'" + vid.Title + "' ,'" + videoId[1] + "', 'No'); ";
+            sqlite_cmd.CommandText = "INSERT INTO Titles (PlaylistID, VideoTitle, VideoId, DownloadedVideo) VALUES('" + UserGetSet.selectedPlaylis + "' ,'" + vid.Title.Replace("\"", "").Replace("'", "") + "' ,'" + videoId[1] + "', 'No'); ";
             sqlite_cmd.ExecuteNonQuery();
             sqlite_conn.Close();
         }
@@ -54,8 +53,7 @@ namespace YourTube.DataBaseClasses
             AddInfo addInfo = new AddInfo();
             addInfo.addSongs(playlistName, url, yesNo);
             sqlite_conn.Open();
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = sqlite_conn.CreateCommand();
+            SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
             UserGetSet.input();
             sqlite_cmd.CommandText = "INSERT INTO Playlist (UserId, Name, PlaylistUrl) VALUES('" + UserGetSet.username + "' ,'" + playlistName + "' ,'" + url + "'); ";
             sqlite_cmd.ExecuteNonQuery();

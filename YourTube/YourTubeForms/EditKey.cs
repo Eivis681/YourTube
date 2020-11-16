@@ -34,12 +34,12 @@ namespace YourTube
         {
             TestApiKey testApiKey = new TestApiKey();
             string testResult = testApiKey.testApiKey(textBoxKey.Text);
-            //if (testResult == "Bad")
-            //{
-            //    MessageBox.Show("This Api key is invalid");
-            //}
-            //else
-            //{
+            if (testResult == "Bad")
+            {
+                MessageBox.Show("This Api key is invalid");
+            }
+            else
+            {
                 SQLiteConnection sqlite_conn = new SQLiteConnection("Data Source=YourTubeDB.db; Version = 3; New = True; Compress = True; ");
                 sqlite_conn.Open();
                 SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
@@ -50,7 +50,7 @@ namespace YourTube
                 this.Hide();
                 YourTube yourTube = new YourTube();
                 yourTube.Show();
-            //}
+            }
         }
     }
 }
