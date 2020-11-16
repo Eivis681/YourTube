@@ -13,6 +13,9 @@ namespace YourTube.DataBaseClasses
         {
             sqlite_conn.Open();
             SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
+            username = username.Replace(" ", string.Empty);
+            password = password.Replace(" ", string.Empty);
+            apiKey = apiKey.Replace(" ", string.Empty);
             sqlite_cmd.CommandText = "INSERT INTO User (Username, Password, ApiKey) VALUES('" + username + "' ,'" + password + "' ,'" + apiKey + "'); ";
             sqlite_cmd.ExecuteNonQuery();
             sqlite_conn.Close();

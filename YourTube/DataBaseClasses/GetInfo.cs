@@ -11,6 +11,8 @@ namespace YourTube.DataBaseClasses
         {
             sqlite_conn.Open();
             SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
+            username = username.Replace(" ", string.Empty);
+            password = password.Replace(" ", string.Empty);
             sqlite_cmd.CommandText = "Select Username, Password, ApiKey from User where Username ='" + username + "'";
             SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader();
             string myreader = null;
@@ -62,15 +64,15 @@ namespace YourTube.DataBaseClasses
             return playlistData;
         }
 
-         public List<int> getPlaylistData(List<string> playlistUrls)
+        public List<int> getPlaylistData(List<string> playlistUrls)
         {
             List<int> count = new List<int>();
-            foreach(string url in playlistUrls)
+            foreach (string url in playlistUrls)
             {
                 sqlite_conn.Open();
                 SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
                 UserGetSet.input();
-                sqlite_cmd.CommandText = "Select VideoTitle from Titles WHERE VideoUrl = '" + url + "' AND PlaylistID = '" + UserGetSet.selectedPlaylis+"'";
+                sqlite_cmd.CommandText = "Select VideoTitle from Titles WHERE VideoUrl = '" + url + "' AND PlaylistID = '" + UserGetSet.selectedPlaylis + "'";
                 SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader();
                 List<string> playlistData = new List<string>();
                 while (sqlite_datareader.Read())
@@ -121,9 +123,9 @@ namespace YourTube.DataBaseClasses
             sqlite_conn.Open();
             SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
             UserGetSet.input();
-            sqlite_cmd.CommandText = "Select VideoId from Titles Where VideoTitle = '"+videoName+"' AND PlaylistID = '"+UserGetSet.selectedPlaylis+"'";
+            sqlite_cmd.CommandText = "Select VideoId from Titles Where VideoTitle = '" + videoName + "' AND PlaylistID = '" + UserGetSet.selectedPlaylis + "'";
             SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader();
-            string myreader=null;
+            string myreader = null;
             while (sqlite_datareader.Read())
             {
                 myreader = sqlite_datareader.GetString(0);
@@ -137,7 +139,7 @@ namespace YourTube.DataBaseClasses
             sqlite_conn.Open();
             SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
             UserGetSet.input();
-            sqlite_cmd.CommandText = "Select VideoId from Titles Where DownloadedVideo='No' And PlaylistID = '"+UserGetSet.selectedPlaylis+"'";
+            sqlite_cmd.CommandText = "Select VideoId from Titles Where DownloadedVideo='No' And PlaylistID = '" + UserGetSet.selectedPlaylis + "'";
             SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader();
             List<string> videoId = new List<string>();
             while (sqlite_datareader.Read())
@@ -154,7 +156,7 @@ namespace YourTube.DataBaseClasses
             sqlite_conn.Open();
             SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
             UserGetSet.input();
-            sqlite_cmd.CommandText = "Select PlaylistID from Titles Where PlaylistID='"+playlistName+"'";
+            sqlite_cmd.CommandText = "Select PlaylistID from Titles Where PlaylistID='" + playlistName + "'";
             SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader();
             List<string> count = new List<string>();
             while (sqlite_datareader.Read())
@@ -165,7 +167,7 @@ namespace YourTube.DataBaseClasses
             sqlite_conn.Close();
             return count.Count.ToString();
         }
-        
+
 
 
         public List<string> getAllVideoId(string playlistName)
