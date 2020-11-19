@@ -20,6 +20,22 @@ namespace YourTube.DataBaseClasses
             sqlite_cmd.ExecuteNonQuery();
             sqlite_conn.Close();
         }
+
+        public async void addUpdatedSongs(List<string> videoId, string rrr)
+        {
+            sqlite_conn.Open();
+            foreach (string id in videoId)
+            {
+                var youtube = new YoutubeClient();
+                string url = "https://www.youtube.com/watch?v=" + id;
+                var vid = await youtube.Videos.GetAsync(url);
+                SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
+                UserGetSet.input();
+                sqlite_cmd.CommandText = "INSERT INTO Titles (PlaylistID, VideoTitle, VideoId, DownloadedVideo, VideoUrl) VALUES('" + UserGetSet.selectedPlaylis + "' ,'" + vid.Title.Replace("\"", "").Replace("'", "") + "' ,'" + id + "', 'No', '"+rrr+"'); ";
+                sqlite_cmd.ExecuteNonQuery();
+            }
+            sqlite_conn.Close();
+        }
         public void addSongs(string playlistName, string url, string yesNo)
         {
             LinksFromPlaylist linksFromPlaylist = new LinksFromPlaylist();

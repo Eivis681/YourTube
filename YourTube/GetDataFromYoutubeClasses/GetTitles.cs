@@ -18,7 +18,6 @@ namespace YourTube.GetDataFromYoutubeClasses
                 UserGetSet.input();
                 string url = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=" + playlistId[1] + "&key="+UserGetSet.apiKey+"";
                 WebClient wc = new WebClient();
-                //Calls google ur to get JSON file with an address
                 string urlData = wc.DownloadString(url);
                 List<string> titleList = new List<string>();
                 string[] data = urlData.Split('"');

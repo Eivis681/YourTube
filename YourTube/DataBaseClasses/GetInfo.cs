@@ -203,5 +203,22 @@ namespace YourTube.DataBaseClasses
             return playlistUrls;
         }
 
+        public List<string> getVideoIdUpdate(string url)
+        {
+            sqlite_conn.Open();
+            SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
+            UserGetSet.input();
+            sqlite_cmd.CommandText = "Select VideoId from Titles Where VideoUrl='"+url+"' And PlaylistID = '" + UserGetSet.selectedPlaylis + "'";
+            SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader();
+            List<string> videoId = new List<string>();
+            while (sqlite_datareader.Read())
+            {
+                string myreader = sqlite_datareader.GetString(0);
+                videoId.Add(myreader);
+            }
+            sqlite_conn.Close();
+            return videoId;
+        }
+
     }
 }

@@ -218,28 +218,55 @@ namespace YourTube
         private void Update_Click(object sender, EventArgs e)
         {
             GetInfo getInfo = new GetInfo();
-            GetTitles getTitles = new GetTitles();
+            LinksFromPlaylist linksFromPlaylist = new LinksFromPlaylist();
             List<string> playlistUrls = getInfo.playlistUrls();
 
             List<int> videoCount = getInfo.getPlaylistData(playlistUrls);
 
             List<int> updatedInfoCount = new List<int>();
-            foreach(string url in playlistUrls)
+            List<string> infoCount = new List<string>();
+            foreach (string url in playlistUrls)
             {
-                List<string> infoCount = getTitles.getTitles(url);
+                infoCount = linksFromPlaylist.getLinks(url);
                 updatedInfoCount.Add(infoCount.Count);
             }
-            for (int i = 0; i<1000;i++)
+            bool noUpdate = false;
+            for (int i = 0; i<updatedInfoCount.Count;i++)
             {
                 if (videoCount[i]<updatedInfoCount[i])
                 {
-                    MessageBox.Show("There is an update "); 
+                    List<string> databaseVideoId = getInfo.getVideoIdUpdate(playlistUrls[i]);
+                    List<string> updatedVideoList = new List<string>();
+                    List<string> newSongs = linksFromPlaylist.getLinks(playlistUrls[i]);
+                    for (int j = 0; j< newSongs.Count;j++)
+                    {
+                        bool foundVideo = false;
+                        for (int z= 0; z<databaseVideoId.Count;z++)
+                        {
+                            if (newSongs[j]==databaseVideoId[z])
+                            {
+                                foundVideo = true;
+                                break;
+                            }
+                        }
+                        if (foundVideo == false)
+                        {
+                            updatedVideoList.Add(newSongs[j]);
+                        }
+                    }
+                    AddInfo addInfo = new AddInfo();
+                    addInfo.addUpdatedSongs(updatedVideoList,playlistUrls[i]);
+                    noUpdate = true;
                 }
-                else if (videoCount.Count==i)
-                {
-                    MessageBox.Show("There are no videos to update");
-                    break;
-                }
+            }
+            if (noUpdate == false)
+            {
+                MessageBox.Show("There are no available updates");
+            }
+            else
+            {
+                updateList();
+                MessageBox.Show("Playlists have been updated");
             }
         }
     }
