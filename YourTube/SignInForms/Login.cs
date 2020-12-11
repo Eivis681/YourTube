@@ -35,7 +35,7 @@ namespace YourTube
                 GetInfo getInfo = new GetInfo();
                 int check = getInfo.checkUserCredentials(usenameText.Text, passwordText.Text);
                 TestApiKey testApiKey = new TestApiKey();
-                string testRezults = "Good";//testApiKey.testApiKey(UserGetSet.apiKey);
+                string testRezults = testApiKey.testApiKey(UserGetSet.apiKey);
                 YourTube yourTube = new YourTube();
                 if (testRezults=="Bad")
                 {
@@ -56,6 +56,11 @@ namespace YourTube
             this.Hide();
             Register register = new Register();
             register.Show();
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -40,11 +40,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.uriTextBoxSong = new System.Windows.Forms.TextBox();
             this.Videos = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.MKV = new System.Windows.Forms.RadioButton();
+            this.MP4 = new System.Windows.Forms.RadioButton();
             this.fromVidLab = new System.Windows.Forms.Label();
             this.toVidLab = new System.Windows.Forms.Label();
-            this.MKV = new System.Windows.Forms.RadioButton();
             this.videoProgressBar = new System.Windows.Forms.ProgressBar();
-            this.MP4 = new System.Windows.Forms.RadioButton();
             this.VideoDownload = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.VideoBrowse = new System.Windows.Forms.Button();
@@ -61,6 +62,7 @@
             this.DeletePlaylist = new System.Windows.Forms.Button();
             this.CreatePlaylistButton = new System.Windows.Forms.Button();
             this.Account = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.deleteAccount = new System.Windows.Forms.Button();
             this.EditKeyy = new System.Windows.Forms.Button();
             this.changePassword = new System.Windows.Forms.Button();
@@ -70,10 +72,10 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.MP3.SuspendLayout();
             this.Videos.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.Playlists.SuspendLayout();
             this.Account.SuspendLayout();
             this.SuspendLayout();
@@ -190,9 +192,7 @@
             // 
             this.Videos.Controls.Add(this.fromVidLab);
             this.Videos.Controls.Add(this.toVidLab);
-            this.Videos.Controls.Add(this.MKV);
             this.Videos.Controls.Add(this.videoProgressBar);
-            this.Videos.Controls.Add(this.MP4);
             this.Videos.Controls.Add(this.VideoDownload);
             this.Videos.Controls.Add(this.label5);
             this.Videos.Controls.Add(this.VideoBrowse);
@@ -206,6 +206,39 @@
             this.Videos.TabIndex = 1;
             this.Videos.Text = "Videos";
             this.Videos.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.MKV);
+            this.groupBox1.Controls.Add(this.MP4);
+            this.groupBox1.Location = new System.Drawing.Point(502, 162);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(130, 35);
+            this.groupBox1.TabIndex = 16;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Video Quality";
+            // 
+            // MKV
+            // 
+            this.MKV.AutoSize = true;
+            this.MKV.Location = new System.Drawing.Point(76, 12);
+            this.MKV.Name = "MKV";
+            this.MKV.Size = new System.Drawing.Size(46, 17);
+            this.MKV.TabIndex = 13;
+            this.MKV.TabStop = true;
+            this.MKV.Text = "Best";
+            this.MKV.UseVisualStyleBackColor = true;
+            // 
+            // MP4
+            // 
+            this.MP4.AutoSize = true;
+            this.MP4.Location = new System.Drawing.Point(15, 12);
+            this.MP4.Name = "MP4";
+            this.MP4.Size = new System.Drawing.Size(45, 17);
+            this.MP4.TabIndex = 12;
+            this.MP4.TabStop = true;
+            this.MP4.Text = "Low";
+            this.MP4.UseVisualStyleBackColor = true;
             // 
             // fromVidLab
             // 
@@ -225,34 +258,12 @@
             this.toVidLab.TabIndex = 14;
             this.toVidLab.Text = "0";
             // 
-            // MKV
-            // 
-            this.MKV.AutoSize = true;
-            this.MKV.Location = new System.Drawing.Point(410, 143);
-            this.MKV.Name = "MKV";
-            this.MKV.Size = new System.Drawing.Size(48, 17);
-            this.MKV.TabIndex = 13;
-            this.MKV.TabStop = true;
-            this.MKV.Text = "MKV";
-            this.MKV.UseVisualStyleBackColor = true;
-            // 
             // videoProgressBar
             // 
             this.videoProgressBar.Location = new System.Drawing.Point(3, 111);
             this.videoProgressBar.Name = "videoProgressBar";
             this.videoProgressBar.Size = new System.Drawing.Size(455, 23);
             this.videoProgressBar.TabIndex = 9;
-            // 
-            // MP4
-            // 
-            this.MP4.AutoSize = true;
-            this.MP4.Location = new System.Drawing.Point(357, 143);
-            this.MP4.Name = "MP4";
-            this.MP4.Size = new System.Drawing.Size(47, 17);
-            this.MP4.TabIndex = 12;
-            this.MP4.TabStop = true;
-            this.MP4.Text = "MP4";
-            this.MP4.UseVisualStyleBackColor = true;
             // 
             // VideoDownload
             // 
@@ -316,7 +327,7 @@
             this.Playlists.Controls.Add(this.CreatePlaylistButton);
             this.Playlists.Location = new System.Drawing.Point(4, 22);
             this.Playlists.Name = "Playlists";
-            this.Playlists.Size = new System.Drawing.Size(464, 222);
+            this.Playlists.Size = new System.Drawing.Size(367, 222);
             this.Playlists.TabIndex = 2;
             this.Playlists.Text = "Playlists";
             this.Playlists.UseVisualStyleBackColor = true;
@@ -408,10 +419,21 @@
             this.Account.Controls.Add(this.label2);
             this.Account.Location = new System.Drawing.Point(4, 22);
             this.Account.Name = "Account";
-            this.Account.Size = new System.Drawing.Size(464, 222);
+            this.Account.Size = new System.Drawing.Size(367, 222);
             this.Account.TabIndex = 3;
             this.Account.Text = "Account";
             this.Account.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.AutoSize = true;
+            this.button1.Location = new System.Drawing.Point(386, 196);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 18;
+            this.button1.Text = "Sign out";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // deleteAccount
             // 
@@ -506,22 +528,12 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "Username:";
             // 
-            // button1
-            // 
-            this.button1.AutoSize = true;
-            this.button1.Location = new System.Drawing.Point(386, 196);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "Sign out";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // YourTube
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(492, 269);
+            this.ClientSize = new System.Drawing.Size(485, 269);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tabControl1);
             this.Name = "YourTube";
             this.Text = "Form1";
@@ -530,6 +542,8 @@
             this.MP3.PerformLayout();
             this.Videos.ResumeLayout(false);
             this.Videos.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.Playlists.ResumeLayout(false);
             this.Account.ResumeLayout(false);
             this.Account.PerformLayout();
@@ -582,6 +596,7 @@
         private System.Windows.Forms.ColumnHeader playlistName;
         private System.Windows.Forms.ColumnHeader playlistUrl;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

@@ -151,10 +151,10 @@ namespace YourTube
             {
                 MessageBox.Show("Please select where you want to save your video");
             }
-            else if (MP4.Checked == false && MKV.Checked == false)
-            {
-                MessageBox.Show("Please select video format");
-            }
+            //else if (MP4.Checked == false && MKV.Checked == false)
+            //{
+            //    MessageBox.Show("Please select video quality");
+            //}
             else if (videoArray[0] != "https://www.youtube.com/watch" && videoArray[0] != "https://www.youtube.com/playlist")
             {
                 MessageBox.Show("We only support Youtube.com links");
@@ -162,15 +162,13 @@ namespace YourTube
             else if (videoArray[0] == "https://www.youtube.com/watch")
             {
                 VideoDownload videoDownload = new VideoDownload(ProgressBarVideo);
-                string format1 = null;
-                if (MP4.Checked == true)
-                {
-                    format1 = MP4.Text;
-                }
-                else if (MP4.Checked == true)
-                {
-                    format1 = MP4.Text;
-                }
+                string format1 = "1";
+                //if (MP4.Checked == true)
+                //{
+                //    format1 = "1";
+                //}
+                //else format1 = "2";
+
                 DialogResult dr = MessageBox.Show("Do you want to download this video", "Download", MessageBoxButtons.YesNo);
                 if (dr == DialogResult.Yes)
                 {
@@ -184,6 +182,12 @@ namespace YourTube
                 DialogResult dr = MessageBox.Show("This is a video play list do you want to download it ?", "Download", MessageBoxButtons.YesNo);
                 if (dr == DialogResult.Yes)
                 {
+                    string format1 = null;
+                    if (MP4.Checked == true)
+                    {
+                        format1 = "1";
+                    }
+                    else format1 = "2";
                     LinksFromPlaylist linksFromPlaylist = new LinksFromPlaylist();
                     List<string> videoIdLists = linksFromPlaylist.getLinks(videoURL.Text);
                     if (videoIdLists[0] == "error")

@@ -33,7 +33,7 @@ namespace YourTube.SongDownloadClasses
                 else
                 {
                     index++;
-                    var streamManifest = await youtube.Videos.Streams.GetManifestAsync(vid.Id);
+                    var streamManifest = await youtube.Videos.Streams.GetManifestAsync(id);
                     var streamInfo = streamManifest.GetAudioOnly().WithHighestBitrate();
                     if (streamInfo != null)
                     {

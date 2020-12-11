@@ -6,7 +6,7 @@ namespace YourTube.DataBaseClasses
 {
     public class GetInfo
     {
-        SQLiteConnection sqlite_conn = new SQLiteConnection("Data Source=YourTubeDB.db; Version = 3; New = True; Compress = True; ");
+        SQLiteConnection sqlite_conn = new SQLiteConnection("Data Source=C:\\Users\\PC\\Desktop\\Programu inzinerija\\YourTube\\YourTube\\bin\\Debug\\YourTubeDB.db; Version = 3; New = True; Compress = True; ");
         public int checkUserCredentials(string username, string password)
         {
             sqlite_conn.Open();

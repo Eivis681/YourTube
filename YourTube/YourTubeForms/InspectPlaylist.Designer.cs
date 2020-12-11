@@ -178,7 +178,7 @@
             this.Controls.Add(this.DeleteSong);
             this.Controls.Add(this.AddSong);
             this.Name = "InspectPlaylist";
-            this.Text = "InspectPlaylist";
+            this.Text = " b  ";
             this.ResumeLayout(false);
             this.PerformLayout();
 
